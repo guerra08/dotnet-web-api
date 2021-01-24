@@ -31,11 +31,10 @@ namespace DotnetWebApi.Controllers
         }
 
         [HttpGet]
-        public List<Student> GetStudents()
+        public List<Student> GetStudents([FromQuery] string code = null, [FromQuery] string name = null)
         {
-            var students = _context.Students.ToList();
-
-            return students;
+            var students = _context.Students;
+            return students.Where(e => (code == null || e.Code == code) && (name == null || e.Name == name)).ToList();
         }
 
         [HttpGet("{id}")]
